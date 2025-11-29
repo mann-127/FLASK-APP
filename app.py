@@ -61,6 +61,17 @@ def divide_numbers():
     except ValueError:
         return jsonify({"error": "Invalid input: 'a' and 'b' must be integers"}), 400
 
+# 5. Cube (Query Parameters) - NEW
+@app.route("/cube", methods=["GET"])
+def cube_number():
+    """Calculates the cube (x * x * x) of a single number 'x'."""
+    # How to call: http://127.0.0.1:5000/cube?x=3
+    try:
+        x = int(request.args.get("x", 0))
+        return jsonify({"result": x ** 3})
+    except ValueError:
+        return jsonify({"error": "Invalid input: 'x' must be an integer"}), 400
+
 # 10. Health Check (GET) - NEW
 @app.route("/health", methods=["GET"])
 def health_check():
