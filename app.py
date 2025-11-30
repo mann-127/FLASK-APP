@@ -72,6 +72,27 @@ def cube_number():
     except ValueError:
         return jsonify({"error": "Invalid input: 'x' must be an integer"}), 400
 
+# 8. Calculate Area (POST with JSON) - NEW
+@app.route("/area", methods=["POST"])
+def calculate_area():
+    """Calculates the area of a rectangle based on JSON body data."""
+    # How to call (e.g., using curl or Postman):
+    # curl -X POST -H "Content-Type: application/json" -d '{"width": 5, "height": 10}' http://127.0.0.1:5000/area
+    
+    data = request.get_json()
+    if not data or 'width' not in data or 'height' not in data:
+        return jsonify({"error": "Missing 'width' or 'height' in JSON body"}), 400
+ 
+    try:
+        width = int(data['width'])
+        height = int(data['height'])
+        area = width * height
+        return jsonify({"result": area, "units": "square units"})
+    except ValueError:
+        return jsonify({"error": "Width and height must be integers"}), 400
+    except Exception:
+        return jsonify({"error": "Invalid JSON format"}), 400
+
 # 10. Health Check (GET) - NEW
 @app.route("/health", methods=["GET"])
 def health_check():
